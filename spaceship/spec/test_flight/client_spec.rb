@@ -177,11 +177,11 @@ describe Spaceship::TestFlight::Client do
     end
   end
 
-  context '#put_tester_to_group' do
+  context '#add_tester_to_group' do
     it 'executes the request' do
-      MockAPI::TestFlightServer.put('/testflight/v2/providers/fake-team-id/apps/some-app-id/groups/fake-group-id/testers/fake-tester-id') {}
-      subject.put_tester_to_group(app_id: app_id, tester_id: 'fake-tester-id', group_id: 'fake-group-id')
-      expect(WebMock).to have_requested(:put, 'https://itunesconnect.apple.com/testflight/v2/providers/fake-team-id/apps/some-app-id/groups/fake-group-id/testers/fake-tester-id')
+      MockAPI::TestFlightServer.post('/testflight/v2/providers/fake-team-id/apps/some-app-id/groups/fake-group-id/testers') {}
+      subject.add_tester_to_group(app_id: app_id, email: 'fake@email.com', group_id: 'fake-group-id')
+      expect(WebMock).to have_requested(:post, 'https://itunesconnect.apple.com/testflight/v2/providers/fake-team-id/apps/some-app-id/groups/fake-group-id/testers')
     end
   end
 

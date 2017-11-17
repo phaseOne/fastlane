@@ -53,7 +53,7 @@ module Spaceship::TestFlight
                                                 last_name: tester.last_name,
                                                     email: tester.email)
       # This put request adds the tester to the group
-      client.put_tester_to_group(group_id: self.id, tester_id: tester_data['id'], app_id: self.app_id)
+      client.add_tester_to_group(group_id: self.id, email: tester_data['email'], app_id: self.app_id)
     end
 
     def remove_tester!(tester)

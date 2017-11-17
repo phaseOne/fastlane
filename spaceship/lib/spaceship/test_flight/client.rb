@@ -164,18 +164,17 @@ module Spaceship::TestFlight
       handle_response(response)
     end
 
-    def put_tester_to_group(app_id: nil, tester_id: nil, group_id: nil)
+    def add_tester_to_group(app_id: nil, email: nil, group_id: nil)
       assert_required_params(__method__, binding)
 
       # Then we can add the tester to the group that allows the app to test
       # This is easy enough, we already have all this data. We don't need any response from the previous request
-      url = "providers/#{team_id}/apps/#{app_id}/groups/#{group_id}/testers/#{tester_id}"
-      response = request(:put) do |req|
+      url = "providers/#{team_id}/apps/#{app_id}/groups/#{group_id}/testers"
+      response = request(:post) do |req|
         req.url url
-        req.body = {
-          "groupId" => group_id,
-          "testerId" => tester_id
-        }.to_json
+        req.body = [{
+          "email" => email # iTC also sends the tester's firstName and lastName, but it's not necessary here
+        }].to_json
         req.headers['Content-Type'] = 'application/json'
       end
       handle_response(response)
